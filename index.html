@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>日央水源 v1.3.1</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap');
+        
+        html, body, #root {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            background-color: #020617;
+            font-family: 'Noto Sans TC', sans-serif;
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .glass-morphism {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(59, 130, 246, 0.1);
+        }
+
+        .dd373-card-v2 {
+            background-color: #080c18;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 3rem;
+        }
+
+        .btn-glow {
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .logo-btn {
+            cursor: pointer;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .logo-btn:active { transform: scale(0.9); }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #020617; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        const SHEET_ID = "1ujUTvJcHLN7MTMLJrbuLX_m789syksY0cSPmKw175yY";
+        const SHEET_CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv`;
+        
+        const BASE_DATE = new Date('2026-02-26T22:00:00');
+        const BASE_COUNT = 4432;
+
+        const Icon = ({ name, size = 20, className = "" }) => {
+            const icons = {
+                users: (
+                    <React.Fragment>
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                        <circle cx="9" cy="7" r="4"/>
+                        <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                    </React.Fragment>
+                ),
+                check: <polyline points="20 6 9 17 4 12"/>,
+                message: <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>,
+                chevronRight: <polyline points="9 18 15 12 9 6"/>,
+                globe: (
+                    <React.Fragment>
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="2" y1="12" x2="22" y2="12"/>
+                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                    </React.Fragment>
+                ),
+                trending: (
+                    <React.Fragment>
+                        <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+                        <polyline points="17 6 23 6 23 12"/>
+                    </React.Fragment>
+                ),
+                x: (
+                    <React.Fragment>
+                        <line x1="18" y1="6" x2="6" y2="18"/>
+                        <line x1="6" y1="6" x2="18" y2="18"/>
+                    </React.Fragment>
+                ),
+                external: (
+                    <React.Fragment>
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                        <polyline points="15 3 21 3 21 9"/>
+                        <line x1="10" y1="14" x2="21" y2="3"/>
+                    </React.Fragment>
+                ),
+                refresh: (
+                    <React.Fragment>
+                        <path d="M23 4v6h-6"/>
+                        <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+                    </React.Fragment>
+                ),
+                download: (
+                    <React.Fragment>
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="7 10 12 15 17 10"/>
+                        <line x1="12" y1="15" x2="12" y2="3"/>
+                    </React.Fragment>
+                )
+            };
+            return (
+                <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                    {icons[name] || null}
+                </svg>
+            );
+        };
+
+        const BrandLogo = ({ onClick }) => (
+            <div className="relative w-32 h-32 flex items-center justify-center logo-btn" onClick={onClick}>
+                <div className="absolute inset-0 bg-blue-500/20 rounded-full blur-3xl animate-pulse"></div>
+                <div className="relative w-24 h-24 bg-slate-900 rounded-full shadow-2xl flex items-center justify-center border border-slate-700">
+                    <svg viewBox="0 0 100 100" className="w-full h-full p-4">
+                        <defs>
+                            <linearGradient id="sunGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stopColor="#fbbf24" />
+                                <stop offset="100%" stopColor="#f59e0b" />
+                            </linearGradient>
+                            <linearGradient id="waterGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stopColor="#3b82f6" />
+                                <stop offset="100%" stopColor="#1d4ed8" />
+                            </linearGradient>
+                        </defs>
+                        <circle cx="50" cy="40" r="18" fill="url(#sunGrad)" />
+                        <path d="M20 65 Q 35 55, 50 65 T 80 65" fill="none" stroke="url(#waterGrad)" strokeWidth="6" strokeLinecap="round" />
+                    </svg>
+                </div>
+            </div>
+        );
+
+        function App() {
+            const [rates, setRates] = useState([]); 
+            const [showBannerModal, setShowBannerModal] = useState(false);
+            const [bannerUrl, setBannerUrl] = useState(null);
+            const [lastUpdate, setLastUpdate] = useState("");
+            const [isLoading, setIsLoading] = useState(false);
+            const [onlineCount, setOnlineCount] = useState(300);
+            const [transactionCount, setTransactionCount] = useState(BASE_COUNT);
+            const canvasRef = useRef(null);
+
+            const seededRandom = (seed) => {
+                const x = Math.sin(seed) * 10000;
+                return x - Math.floor(x);
+            };
+
+            const calculateGlobalStats = () => {
+                const now = new Date();
+                const nowTs = now.getTime();
+                
+                const diffMs = nowTs - BASE_DATE.getTime();
+                if (diffMs >= 0) {
+                    const thirtyMin = 30 * 60 * 1000;
+                    const intervals = Math.floor(diffMs / thirtyMin);
+                    let totalAdded = 0;
+                    for (let i = 1; i <= intervals; i++) {
+                        const seed = (BASE_DATE.getTime() + i * thirtyMin) / 1000;
+                        totalAdded += Math.floor(seededRandom(seed) * (22 - 8 + 1)) + 8;
+                    }
+                    setTransactionCount(BASE_COUNT + totalAdded);
+                }
+
+                const thirtySec = 30 * 1000;
+                const currentSlot = Math.floor(nowTs / thirtySec);
+                let currentOnline = 300; 
+                const lookbackSlots = 120;
+                const startSlot = currentSlot - lookbackSlots;
+
+                for (let s = startSlot; s <= currentSlot; s++) {
+                    const slotSeed = s * 1.234;
+                    const changeDir = seededRandom(slotSeed) > 0.5 ? 1 : -1;
+                    const changeAmount = Math.floor(seededRandom(slotSeed + 1) * (50 - 5 + 1)) + 5;
+                    currentOnline += (changeDir * changeAmount);
+                    if (currentOnline < 150) currentOnline = 150 + Math.floor(seededRandom(s) * 20);
+                    if (currentOnline > 550) currentOnline = 550 - Math.floor(seededRandom(s) * 20);
+                }
+                setOnlineCount(currentOnline);
+            };
+
+            const fetchRatesFromSheet = async () => {
+                setIsLoading(true);
+                try {
+                    const response = await fetch(SHEET_CSV_URL);
+                    const csvText = await response.text();
+                    const rows = csvText.split('\n').slice(1); 
+                    const parsedData = rows.map(row => {
+                        const cols = row.split(',');
+                        if (cols.length >= 2) {
+                            return {
+                                name: cols[0].trim().replace(/^"|"$/g, ''),
+                                value: cols[1].trim().replace(/^"|"$/g, '')
+                            };
+                        }
+                        return null;
+                    }).filter(item => item && item.name);
+                    setRates(parsedData);
+                    setLastUpdate(new Date().toLocaleString('zh-TW', { hour12: false }));
+                } catch (error) {
+                    console.error("Fetch Error:", error);
+                } finally {
+                    setIsLoading(false);
+                }
+            };
+
+            useEffect(() => {
+                fetchRatesFromSheet();
+                calculateGlobalStats();
+                const timer = setInterval(calculateGlobalStats, 10000);
+                return () => clearInterval(timer);
+            }, []);
+
+            const generateBanner = () => {
+                if (rates.length === 0) return;
+                
+                const canvas = canvasRef.current;
+                const ctx = canvas.getContext('2d');
+                
+                const headerH = 320;
+                const rowH = 70;
+                const listPaddingTop = 40;
+                const listPaddingBottom = 40;
+                const footerH = 380;
+                
+                const contentH = (rates.length * rowH) + listPaddingTop + listPaddingBottom;
+                
+                canvas.width = 1200;
+                canvas.height = headerH + contentH + footerH;
+
+                ctx.fillStyle = '#020617';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 100px "Noto Sans TC"';
+                ctx.textAlign = 'center';
+                ctx.fillText('日央水源', 600, 180);
+                
+                ctx.fillStyle = '#3b82f6';
+                ctx.font = '42px "Noto Sans TC"';
+                ctx.fillText('NC Heaven Coin Real-Time Price Platform', 600, 260);
+
+                ctx.fillStyle = 'rgba(30, 41, 59, 0.5)';
+                ctx.fillRect(100, headerH, 1000, contentH);
+                ctx.strokeStyle = '#3b82f6';
+                ctx.lineWidth = 2;
+                ctx.strokeRect(100, headerH, 1000, contentH);
+
+                rates.forEach((item, i) => {
+                    const y = headerH + listPaddingTop + 45 + (i * rowH);
+                    if (i > 0) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+                        ctx.moveTo(150, y - 45);
+                        ctx.lineTo(1050, y - 45);
+                        ctx.stroke();
+                    }
+                    ctx.font = 'bold 36px "Noto Sans TC"';
+                    ctx.textAlign = 'left';
+                    ctx.fillStyle = '#f1f5f9';
+                    ctx.fillText(item.name, 150, y);
+                    ctx.textAlign = 'right';
+                    ctx.fillStyle = '#60a5fa';
+                    ctx.font = '900 42px "Noto Sans TC"';
+                    ctx.fillText(item.value || '詢問客服', 1050, y);
+                });
+
+                const footBaseY = headerH + contentH + 100;
+                ctx.textAlign = 'center';
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 48px "Noto Sans TC"';
+                ctx.fillText('DD373 大陸版 8591 官方合作', 600, footBaseY);
+                ctx.fillStyle = '#10b981';
+                ctx.font = 'bold 56px "Noto Sans TC"';
+                ctx.fillText('官方 LINE: @321enghh', 600, footBaseY + 120);
+                ctx.fillStyle = '#64748b';
+                ctx.font = '30px "Noto Sans TC"';
+                ctx.fillText(`更新時間：${lastUpdate}  |  請認明官方帳號，謹防詐騙`, 600, footBaseY + 200);
+
+                setBannerUrl(canvas.toDataURL('image/png'));
+                setShowBannerModal(true);
+            };
+
+            const handleDownload = (e) => {
+                if (!bannerUrl) return;
+                const link = document.createElement('a');
+                link.href = bannerUrl;
+                link.download = `日央報價_${new Date().getTime()}.png`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            };
+
+            return (
+                <div className="min-h-full w-full relative pb-24 text-slate-200">
+                    <canvas ref={canvasRef} className="hidden" />
+                    
+                    <header className="pt-20 pb-12 px-4 text-center">
+                        <div className="mb-6 flex justify-center">
+                            <BrandLogo onClick={generateBanner} />
+                        </div>
+                        <h1 className="text-6xl font-black tracking-tighter text-white mb-2">日央水源</h1>
+                        <p className="text-blue-500/80 text-[10px] md:text-xs font-bold tracking-[0.2em] md:tracking-[0.3em] uppercase mb-4">NC Heaven Coin Real-Time Price Platform</p>
+                        
+                        <button 
+                            onClick={fetchRatesFromSheet}
+                            className="inline-flex items-center gap-2 px-6 py-2 rounded-full bg-slate-900 border border-slate-800 text-xs font-medium text-slate-400 hover:text-white transition-all"
+                        >
+                            <Icon name="refresh" size={12} className={isLoading ? 'animate-spin' : ''} /> 伺服器同步中：{lastUpdate}
+                        </button>
+                    </header>
+
+                    <main className="max-w-4xl mx-auto px-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+                            <div className="glass-morphism rounded-2xl p-5 flex items-center gap-5 border-emerald-500/10">
+                                <div className="bg-emerald-500/20 p-4 rounded-xl shrink-0"><Icon name="check" className="text-emerald-400" size={24} /></div>
+                                <div>
+                                    <p className="text-[10px] text-slate-500 font-bold uppercase mb-0.5 tracking-tighter">累計交易數 (同步更新)</p>
+                                    <p className="text-2xl font-black text-white tabular-nums">{transactionCount.toLocaleString()}</p>
+                                </div>
+                            </div>
+                            <div className="glass-morphism rounded-2xl p-5 flex items-center gap-5 border-blue-500/10">
+                                <div className="bg-blue-500/20 p-4 rounded-xl shrink-0"><Icon name="users" className="text-blue-400" size={24} /></div>
+                                <div>
+                                    <p className="text-[10px] text-slate-500 font-bold uppercase mb-0.5 tracking-tighter">當前線上人數 (30s 更新)</p>
+                                    <p className="text-2xl font-black text-white tabular-nums">{onlineCount.toLocaleString()}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="glass-morphism rounded-[2.5rem] shadow-2xl overflow-hidden mb-16 border-white/5">
+                            <div className="grid grid-cols-2 bg-slate-900/80 p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest border-b border-white/5">
+                                <div className="flex items-center gap-1.5"><Icon name="globe" size={14}/> 伺服器</div>
+                                <div className="text-right flex items-center justify-end gap-1.5"><Icon name="trending" size={14}/> 當前匯率 (TWD)</div>
+                            </div>
+                            <div className="divide-y divide-white/[0.03]">
+                                {rates.length > 0 ? rates.map((item, idx) => (
+                                    <div key={idx} className="grid grid-cols-2 p-6 items-center hover:bg-white/[0.02] transition-colors">
+                                        <div className="text-slate-200 font-bold">{item.name}</div>
+                                        <div className="text-right"><span className="text-2xl font-black text-blue-400 tracking-tight">{item.value}</span></div>
+                                    </div>
+                                )) : <div className="p-12 text-center text-slate-600 font-bold text-xs uppercase tracking-widest animate-pulse">正在獲取實時數據...</div>}
+                            </div>
+                        </div>
+
+                        <div className="dd373-card-v2 p-8 md:p-12 mb-16 flex flex-col md:flex-row items-center md:items-start gap-10 relative overflow-hidden group">
+                            <div className="absolute top-10 right-10 text-white/[0.03] pointer-events-none group-hover:text-blue-500/10 transition-colors">
+                                <Icon name="external" size={140} />
+                            </div>
+                            <div className="w-56 shrink-0 bg-white p-6 rounded-[2.5rem] shadow-2xl flex flex-col items-center gap-4">
+                                <img src="https://img3.pchome.net/di_downinfo/2025/0715/61db593796854c45a0d381e8c87403f8.png" className="w-full h-auto" alt="DD373 Logo" />
+                                <div className="bg-gradient-to-r from-orange-400 to-red-600 text-white text-xl font-black px-8 py-3 rounded-xl w-full text-center">游戏交易</div>
+                            </div>
+                            <div className="flex-1 text-center md:text-left">
+                                <div className="inline-block px-3 py-1 rounded bg-blue-500/20 text-blue-400 text-[10px] font-bold uppercase tracking-wider mb-4">International Gateway</div>
+                                <h3 className="text-4xl font-bold text-white mb-5 tracking-tight">DD373 大陸版 <span className="text-blue-500">8591</span></h3>
+                                <p className="text-slate-400 text-lg font-medium mb-6">中國規模最大的遊戲跨境交易服務平台。</p>
+                                <div className="bg-blue-500/5 border-l-4 border-blue-500 p-6 rounded-r-2xl mb-8">
+                                    <p className="text-slate-100 font-bold text-lg leading-relaxed">日央水源提供專業代拉服務；除《天堂》外，熱門遊戲亦可諮詢。</p>
+                                </div>
+                                <a href="https://www.dd373.com/s-q0kacj.html" target="_blank" className="inline-flex items-center gap-3 bg-blue-600 hover:bg-blue-500 text-white font-black px-12 py-5 rounded-2xl transition-all btn-glow text-xl">前往 DD373 查看 <Icon name="chevronRight" size={24} /></a>
+                            </div>
+                        </div>
+
+                        <footer className="text-center text-[9px] text-slate-800 font-bold tracking-[0.2em] uppercase pb-10">
+                            © 2026 日央水源 • Secure & Professional Exchange
+                        </footer>
+                    </main>
+
+                    <a href="https://line.me/R/ti/p/@321enghh" target="_blank" className="fixed bottom-8 right-8 bg-[#00B900] text-white p-5 rounded-full shadow-2xl hover:scale-110 active:scale-90 transition-all z-50">
+                        <Icon name="message" size={30} />
+                    </a>
+
+                    {showBannerModal && (
+                        <div className="fixed inset-0 bg-black/98 z-[200] flex flex-col items-center justify-center p-4">
+                            <div className="w-full max-w-lg flex flex-col gap-4 animate-in fade-in zoom-in duration-300">
+                                <div className="flex justify-between items-center text-white px-2">
+                                    <h3 className="font-bold text-lg">報價單生成完成</h3>
+                                    <button onClick={() => setShowBannerModal(false)} className="hover:text-red-500 transition-colors p-2 bg-white/10 rounded-full">
+                                        <Icon name="x" size={24} />
+                                    </button>
+                                </div>
+                                
+                                <div className="bg-slate-900 rounded-3xl overflow-hidden border border-slate-800 shadow-2xl relative">
+                                    <img src={bannerUrl} className="w-full h-auto block" alt="日央報價圖" />
+                                    <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity bg-black/40 pointer-events-none">
+                                        <p className="text-white font-bold bg-black/60 px-4 py-2 rounded-full text-sm">手機用戶請長按圖片存入相簿</p>
+                                    </div>
+                                </div>
+
+                                <div className="space-y-4 pt-2">
+                                    <p className="text-slate-400 text-center text-xs font-bold">手機版長按圖片即可下載</p>
+                                    
+                                    <button 
+                                        onClick={handleDownload}
+                                        className="flex items-center justify-center gap-3 w-full bg-blue-600 hover:bg-blue-500 text-white font-black py-5 rounded-2xl text-lg shadow-lg active:scale-95 transition-all"
+                                    >
+                                        <Icon name="download" size={20} /> 儲存圖片 (PNG)
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        }
+
+        ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+    </script>
+</body>
+</html>
