@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>日央水源 v1.3.1</title>
+    <title>日央水原 v1.3.1</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
@@ -162,7 +162,6 @@
             const calculateGlobalStats = () => {
                 const now = new Date();
                 const nowTs = now.getTime();
-                
                 const diffMs = nowTs - BASE_DATE.getTime();
                 if (diffMs >= 0) {
                     const thirtyMin = 30 * 60 * 1000;
@@ -174,13 +173,11 @@
                     }
                     setTransactionCount(BASE_COUNT + totalAdded);
                 }
-
                 const thirtySec = 30 * 1000;
                 const currentSlot = Math.floor(nowTs / thirtySec);
                 let currentOnline = 300; 
                 const lookbackSlots = 120;
                 const startSlot = currentSlot - lookbackSlots;
-
                 for (let s = startSlot; s <= currentSlot; s++) {
                     const slotSeed = s * 1.234;
                     const changeDir = seededRandom(slotSeed) > 0.5 ? 1 : -1;
@@ -230,75 +227,93 @@
                 const canvas = canvasRef.current;
                 const ctx = canvas.getContext('2d');
                 
-                const headerH = 320;
-                const rowH = 70;
-                const listPaddingTop = 40;
-                const listPaddingBottom = 40;
-                const footerH = 380;
+                const now = new Date();
+                const currentTimeStr = now.toLocaleString('zh-TW', { 
+                    year: 'numeric', 
+                    month: '2-digit', 
+                    day: '2-digit', 
+                    hour: '2-digit', 
+                    minute: '2-digit', 
+                    second: '2-digit',
+                    hour12: false 
+                });
                 
+                const headerH = 300;
+                const rowH = 65;
+                const listPaddingTop = 50;
+                const listPaddingBottom = 50;
+                const footerH = 450; // 加高放明顯的時間
                 const contentH = (rates.length * rowH) + listPaddingTop + listPaddingBottom;
                 
                 canvas.width = 1200;
                 canvas.height = headerH + contentH + footerH;
 
+                // 背景
                 ctx.fillStyle = '#020617';
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+                // 標題
                 ctx.fillStyle = '#ffffff';
-                ctx.font = 'bold 100px "Noto Sans TC"';
+                ctx.font = 'bold 90px "Noto Sans TC"';
                 ctx.textAlign = 'center';
-                ctx.fillText('日央水源', 600, 180);
+                ctx.fillText('日央水原', 600, 180);
                 
                 ctx.fillStyle = '#3b82f6';
-                ctx.font = '42px "Noto Sans TC"';
-                ctx.fillText('NC Heaven Coin Real-Time Price Platform', 600, 260);
+                ctx.font = '36px "Noto Sans TC"';
+                ctx.fillText('專業 NC 天堂天幣報價系統', 600, 250);
 
+                // 數據表
                 ctx.fillStyle = 'rgba(30, 41, 59, 0.5)';
                 ctx.fillRect(100, headerH, 1000, contentH);
-                ctx.strokeStyle = '#3b82f6';
+                ctx.strokeStyle = '#1e293b';
                 ctx.lineWidth = 2;
                 ctx.strokeRect(100, headerH, 1000, contentH);
 
                 rates.forEach((item, i) => {
                     const y = headerH + listPaddingTop + 45 + (i * rowH);
-                    if (i > 0) {
-                        ctx.beginPath();
-                        ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
-                        ctx.moveTo(150, y - 45);
-                        ctx.lineTo(1050, y - 45);
-                        ctx.stroke();
-                    }
-                    ctx.font = 'bold 36px "Noto Sans TC"';
+                    ctx.font = 'bold 34px "Noto Sans TC"';
                     ctx.textAlign = 'left';
-                    ctx.fillStyle = '#f1f5f9';
+                    ctx.fillStyle = '#94a3b8';
                     ctx.fillText(item.name, 150, y);
                     ctx.textAlign = 'right';
-                    ctx.fillStyle = '#60a5fa';
-                    ctx.font = '900 42px "Noto Sans TC"';
+                    ctx.fillStyle = '#3b82f6';
                     ctx.fillText(item.value || '詢問客服', 1050, y);
                 });
 
+                // 底部內容
                 const footBaseY = headerH + contentH + 100;
                 ctx.textAlign = 'center';
                 ctx.fillStyle = '#ffffff';
-                ctx.font = 'bold 48px "Noto Sans TC"';
-                ctx.fillText('DD373 大陸版 8591 官方合作', 600, footBaseY);
-                ctx.fillStyle = '#10b981';
-                ctx.font = 'bold 56px "Noto Sans TC"';
-                ctx.fillText('官方 LINE: @321enghh', 600, footBaseY + 120);
-                ctx.fillStyle = '#64748b';
-                ctx.font = '30px "Noto Sans TC"';
-                ctx.fillText(`更新時間：${lastUpdate}  |  請認明官方帳號，謹防詐騙`, 600, footBaseY + 200);
+                ctx.font = 'bold 46px "Noto Sans TC"';
+                ctx.fillText('DD373 大陸版 8591 日央提供專業代拉服務', 600, footBaseY);
+                
+                ctx.fillStyle = '#00B900';
+                ctx.font = 'bold 54px "Noto Sans TC"';
+                ctx.fillText('官方 LINE: @321enghh', 600, footBaseY + 110);
+                
+                ctx.fillStyle = '#475569';
+                ctx.font = '24px "Noto Sans TC"';
+                ctx.fillText('請認明官方帳號，謹防詐騙', 600, footBaseY + 190);
+                
+                // 強調截圖時間
+                const timeBoxY = footBaseY + 240;
+                ctx.fillStyle = 'rgba(15, 23, 42, 0.8)'; // 深色背景框
+                ctx.roundRect(300, timeBoxY, 600, 70, 15);
+                ctx.fill();
+                
+                ctx.fillStyle = '#60a5fa'; // 亮藍色
+                ctx.font = 'bold 32px "Noto Sans TC"';
+                ctx.fillText(`報價截圖時間：${currentTimeStr}`, 600, timeBoxY + 46);
 
                 setBannerUrl(canvas.toDataURL('image/png'));
                 setShowBannerModal(true);
             };
 
-            const handleDownload = (e) => {
+            const handleDownload = () => {
                 if (!bannerUrl) return;
                 const link = document.createElement('a');
                 link.href = bannerUrl;
-                link.download = `日央報價_${new Date().getTime()}.png`;
+                link.download = `日央水原報價_${new Date().getTime()}.png`;
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
@@ -312,8 +327,8 @@
                         <div className="mb-6 flex justify-center">
                             <BrandLogo onClick={generateBanner} />
                         </div>
-                        <h1 className="text-6xl font-black tracking-tighter text-white mb-2">日央水源</h1>
-                        <p className="text-blue-500/80 text-[10px] md:text-xs font-bold tracking-[0.2em] md:tracking-[0.3em] uppercase mb-4">NC Heaven Coin Real-Time Price Platform</p>
+                        <h1 className="text-6xl font-black tracking-tighter text-white mb-2">日央水原</h1>
+                        <p className="text-blue-500/80 text-xs font-bold tracking-[0.3em] uppercase mb-4">NC Heaven Coin Real-Time Price Platform</p>
                         
                         <button 
                             onClick={fetchRatesFromSheet}
@@ -369,14 +384,14 @@
                                 <h3 className="text-4xl font-bold text-white mb-5 tracking-tight">DD373 大陸版 <span className="text-blue-500">8591</span></h3>
                                 <p className="text-slate-400 text-lg font-medium mb-6">中國規模最大的遊戲跨境交易服務平台。</p>
                                 <div className="bg-blue-500/5 border-l-4 border-blue-500 p-6 rounded-r-2xl mb-8">
-                                    <p className="text-slate-100 font-bold text-lg leading-relaxed">日央水源提供專業代拉服務；除《天堂》外，熱門遊戲亦可諮詢。</p>
+                                    <p className="text-slate-100 font-bold text-lg leading-relaxed">日央水原提供專業代拉服務；除《天堂》外，熱門遊戲亦可諮詢。</p>
                                 </div>
                                 <a href="https://www.dd373.com/s-q0kacj.html" target="_blank" className="inline-flex items-center gap-3 bg-blue-600 hover:bg-blue-500 text-white font-black px-12 py-5 rounded-2xl transition-all btn-glow text-xl">前往 DD373 查看 <Icon name="chevronRight" size={24} /></a>
                             </div>
                         </div>
 
                         <footer className="text-center text-[9px] text-slate-800 font-bold tracking-[0.2em] uppercase pb-10">
-                            © 2026 日央水源 • Secure & Professional Exchange
+                            © 2026 日央水原 • Secure & Professional Exchange
                         </footer>
                     </main>
 
@@ -385,30 +400,23 @@
                     </a>
 
                     {showBannerModal && (
-                        <div className="fixed inset-0 bg-black/98 z-[200] flex flex-col items-center justify-center p-4">
-                            <div className="w-full max-w-lg flex flex-col gap-4 animate-in fade-in zoom-in duration-300">
-                                <div className="flex justify-between items-center text-white px-2">
-                                    <h3 className="font-bold text-lg">報價單生成完成</h3>
-                                    <button onClick={() => setShowBannerModal(false)} className="hover:text-red-500 transition-colors p-2 bg-white/10 rounded-full">
-                                        <Icon name="x" size={24} />
-                                    </button>
+                        <div className="fixed inset-0 bg-black/95 z-[200] flex items-center justify-center p-6 backdrop-blur-md">
+                            <button onClick={() => setShowBannerModal(false)} className="absolute top-8 right-8 text-white/50 hover:text-red-500 transition-colors">
+                                <Icon name="x" size={40} />
+                            </button>
+                            
+                            <div className="max-w-md w-full animate-in fade-in zoom-in duration-300">
+                                <div className="bg-slate-900 rounded-[2.5rem] overflow-hidden border border-slate-800 mb-6 shadow-2xl max-h-[70vh] overflow-y-auto">
+                                    <img src={bannerUrl} className="w-full h-auto block" alt="報價單預覽" />
                                 </div>
                                 
-                                <div className="bg-slate-900 rounded-3xl overflow-hidden border border-slate-800 shadow-2xl relative">
-                                    <img src={bannerUrl} className="w-full h-auto block" alt="日央報價圖" />
-                                    <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity bg-black/40 pointer-events-none">
-                                        <p className="text-white font-bold bg-black/60 px-4 py-2 rounded-full text-sm">手機用戶請長按圖片存入相簿</p>
-                                    </div>
-                                </div>
-
-                                <div className="space-y-4 pt-2">
-                                    <p className="text-slate-400 text-center text-xs font-bold">手機版長按圖片即可下載</p>
-                                    
+                                <div className="space-y-4">
+                                    <p className="text-slate-400 text-center text-xs font-bold tracking-widest">手機用戶請長按圖片儲存分享</p>
                                     <button 
                                         onClick={handleDownload}
-                                        className="flex items-center justify-center gap-3 w-full bg-blue-600 hover:bg-blue-500 text-white font-black py-5 rounded-2xl text-lg shadow-lg active:scale-95 transition-all"
+                                        className="flex items-center justify-center gap-3 w-full bg-blue-600 hover:bg-blue-500 text-white font-black py-5 rounded-2xl text-xl shadow-xl active:scale-95 transition-all"
                                     >
-                                        <Icon name="download" size={20} /> 儲存圖片 (PNG)
+                                        <Icon name="download" size={24} /> 儲存圖片到裝置
                                     </button>
                                 </div>
                             </div>
