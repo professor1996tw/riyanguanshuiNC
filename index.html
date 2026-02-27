@@ -72,6 +72,10 @@
             box-shadow: 0 0 20px rgba(24, 119, 242, 0.4);
         }
 
+        .kyc-btn-glow {
+            box-shadow: 0 0 20px rgba(234, 179, 8, 0.3);
+        }
+
         .logo-btn {
             cursor: pointer;
             transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -149,6 +153,9 @@
                 ),
                 facebook: (
                     <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+                ),
+                shield: (
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                 )
             };
             return (
@@ -430,7 +437,7 @@
                         </div>
 
                         {/* Facebook 粉絲專頁區塊 */}
-                        <div className="glass-morphism rounded-[3rem] p-8 md:p-12 mb-16 flex flex-col md:flex-row items-center gap-10 relative overflow-hidden group">
+                        <div className="glass-morphism rounded-[3rem] p-8 md:p-12 mb-8 flex flex-col md:flex-row items-center gap-10 relative overflow-hidden group">
                             <div className="absolute -bottom-10 -left-10 text-[#1877F2]/[0.05] pointer-events-none group-hover:text-[#1877F2]/10 transition-colors">
                                 <Icon name="facebook" size={200} />
                             </div>
@@ -457,7 +464,6 @@
                                 <div className="flex flex-wrap justify-center md:justify-start gap-4 mb-8">
                                     <span className="bg-slate-800/50 text-slate-400 px-4 py-2 rounded-full text-xs font-bold border border-white/5">#天幣買賣</span>
                                     <span className="bg-slate-800/50 text-slate-400 px-4 py-2 rounded-full text-xs font-bold border border-white/5">#代練服務</span>
-                                    <span className="bg-slate-800/50 text-slate-400 px-4 py-2 rounded-full text-xs font-bold border border-white/5">#專業客服</span>
                                 </div>
 
                                 <a 
@@ -470,13 +476,45 @@
                             </div>
                         </div>
 
+                        {/* KYC 身份驗證區塊 - 已改為相對路徑 ./kyc.html */}
+                        <div className="glass-morphism rounded-[3rem] p-8 md:p-12 mb-16 flex flex-col md:flex-row items-center gap-10 relative overflow-hidden group">
+                            <div className="absolute -top-10 -right-10 text-yellow-500/[0.05] pointer-events-none group-hover:text-yellow-500/10 transition-colors">
+                                <Icon name="shield" size={180} />
+                            </div>
+                            
+                            <div className="relative shrink-0 w-48 h-48 flex items-center justify-center bg-yellow-500/10 rounded-[2.5rem] border-4 border-yellow-500/20 shadow-2xl">
+                                <Icon name="shield" size={80} className="text-yellow-500" />
+                                <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/10 to-transparent"></div>
+                            </div>
+
+                            <div className="flex-1 text-center md:text-left z-10">
+                                <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-yellow-500/20 text-yellow-500 text-[10px] font-bold uppercase tracking-wider mb-4">
+                                    <Icon name="shield" size={12} /> Security Verification
+                                </div>
+                                <h3 className="text-4xl font-bold text-white mb-4 tracking-tight">KYC <span className="text-yellow-500">身份驗證</span></h3>
+                                <p className="text-slate-300 text-lg font-medium mb-6">為了保障您的交易安全並防止詐騙，請完成實名認證以開啟更高額度的交易權限。</p>
+                                
+                                <div className="flex flex-wrap justify-center md:justify-start gap-4 mb-8">
+                                    <span className="bg-slate-800/50 text-slate-400 px-4 py-2 rounded-full text-xs font-bold border border-white/5">#安全加密</span>
+                                    <span className="bg-slate-800/50 text-slate-400 px-4 py-2 rounded-full text-xs font-bold border border-white/5">#快速審核</span>
+                                </div>
+
+                                <a 
+                                    href="./kyc.html" 
+                                    className="inline-flex items-center gap-3 bg-gradient-to-r from-yellow-600 to-yellow-500 hover:from-yellow-500 hover:to-yellow-400 text-slate-900 font-black px-12 py-5 rounded-2xl transition-all kyc-btn-glow text-xl"
+                                >
+                                    KYC 身份驗證 <Icon name="chevronRight" size={24} />
+                                </a>
+                            </div>
+                        </div>
+
                         <footer className="text-center pb-10">
                             <div className="max-w-2xl mx-auto mb-6 text-slate-600 text-xs font-medium leading-relaxed">
                                 日央水原致力於提供最安全的天幣買賣管道，及各伺服器匯率查詢。
                                 我們的 DD373 代購服務由資深團隊經營，保證流程透明、速度領先。
                             </div>
                             <div className="text-[9px] text-slate-800 font-bold tracking-[0.2em] uppercase">
-                                © 2026 日央水原 • 專業天幣買賣與 DD373 代購首選 • FB: 日央水原官方粉絲團
+                                © 2026 日央水原 • 專業天幣買賣與 DD373 代購首選 • FB: 日央水原官方粉絲團 • KYC 安全驗證
                             </div>
                         </footer>
                     </main>
