@@ -3,7 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>日央水原 v1.3.1</title>
+    
+    <!-- SEO 優化區域 -->
+    <title>日央水原 - 專業 NC 天堂天幣報價買賣、DD373 代購首選</title>
+    <meta name="description" content="日央水原提供最即時的 NC 天堂天幣匯率查詢、天幣買賣報價。專業 DD373 大陸版 8591 代購、代拉服務，安全可靠，讓您在天堂遊戲中獲得最佳交易體驗。">
+    <meta name="keywords" content="日央水原, 天幣, 天幣買賣, 天幣報價, NC天堂, DD373代購, DD373代拉, 遊戲幣交易, 天堂M幣">
+    <link rel="canonical" href="https://your-domain.com/" />
+    
+    <!-- Open Graph (LINE/FB 分享優化) -->
+    <meta property="og:title" content="日央水原 - 專業 NC 天堂天幣報價買賣">
+    <meta property="og:description" content="即時匯率、安全交易，專業 DD373 代購服務就在日央水原。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://your-domain.com/">
+    
+    <!-- JSON-LD 結構化數據 (SEO 關鍵) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "日央水原",
+      "url": "https://your-domain.com/",
+      "logo": "https://img3.pchome.net/di_downinfo/2025/0715/61db593796854c45a0d381e8c87403f8.png",
+      "description": "專業 NC 天堂天幣報價買賣、DD373 代購與遊戲幣代拉服務。",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer service",
+        "url": "https://line.me/R/ti/p/@321enghh"
+      }
+    }
+    </script>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
@@ -37,6 +66,10 @@
 
         .btn-glow {
             box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .fb-btn-glow {
+            box-shadow: 0 0 20px rgba(24, 119, 242, 0.4);
         }
 
         .logo-btn {
@@ -113,6 +146,9 @@
                         <polyline points="7 10 12 15 17 10"/>
                         <line x1="12" y1="15" x2="12" y2="3"/>
                     </React.Fragment>
+                ),
+                facebook: (
+                    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
                 )
             };
             return (
@@ -242,17 +278,15 @@
                 const rowH = 65;
                 const listPaddingTop = 50;
                 const listPaddingBottom = 50;
-                const footerH = 450; // 加高放明顯的時間
+                const footerH = 450; 
                 const contentH = (rates.length * rowH) + listPaddingTop + listPaddingBottom;
                 
                 canvas.width = 1200;
                 canvas.height = headerH + contentH + footerH;
 
-                // 背景
                 ctx.fillStyle = '#020617';
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-                // 標題
                 ctx.fillStyle = '#ffffff';
                 ctx.font = 'bold 90px "Noto Sans TC"';
                 ctx.textAlign = 'center';
@@ -262,7 +296,6 @@
                 ctx.font = '36px "Noto Sans TC"';
                 ctx.fillText('專業 NC 天堂天幣報價系統', 600, 250);
 
-                // 數據表
                 ctx.fillStyle = 'rgba(30, 41, 59, 0.5)';
                 ctx.fillRect(100, headerH, 1000, contentH);
                 ctx.strokeStyle = '#1e293b';
@@ -280,7 +313,6 @@
                     ctx.fillText(item.value || '詢問客服', 1050, y);
                 });
 
-                // 底部內容
                 const footBaseY = headerH + contentH + 100;
                 ctx.textAlign = 'center';
                 ctx.fillStyle = '#ffffff';
@@ -295,13 +327,13 @@
                 ctx.font = '24px "Noto Sans TC"';
                 ctx.fillText('請認明官方帳號，謹防詐騙', 600, footBaseY + 190);
                 
-                // 強調截圖時間
                 const timeBoxY = footBaseY + 240;
-                ctx.fillStyle = 'rgba(15, 23, 42, 0.8)'; // 深色背景框
+                ctx.fillStyle = 'rgba(15, 23, 42, 0.8)';
+                ctx.beginPath();
                 ctx.roundRect(300, timeBoxY, 600, 70, 15);
                 ctx.fill();
                 
-                ctx.fillStyle = '#60a5fa'; // 亮藍色
+                ctx.fillStyle = '#60a5fa';
                 ctx.font = 'bold 32px "Noto Sans TC"';
                 ctx.fillText(`報價截圖時間：${currentTimeStr}`, 600, timeBoxY + 46);
 
@@ -339,6 +371,12 @@
                     </header>
 
                     <main className="max-w-4xl mx-auto px-4">
+                        {/* SEO 友善的標題組件 */}
+                        <div className="hidden">
+                            <h2>日央水原天幣買賣與報價</h2>
+                            <p>專業 NC 天堂天幣、手遊代儲與 DD373 代購服務。</p>
+                        </div>
+
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
                             <div className="glass-morphism rounded-2xl p-5 flex items-center gap-5 border-emerald-500/10">
                                 <div className="bg-emerald-500/20 p-4 rounded-xl shrink-0"><Icon name="check" className="text-emerald-400" size={24} /></div>
@@ -358,8 +396,8 @@
 
                         <div className="glass-morphism rounded-[2.5rem] shadow-2xl overflow-hidden mb-16 border-white/5">
                             <div className="grid grid-cols-2 bg-slate-900/80 p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest border-b border-white/5">
-                                <div className="flex items-center gap-1.5"><Icon name="globe" size={14}/> 伺服器</div>
-                                <div className="text-right flex items-center justify-end gap-1.5"><Icon name="trending" size={14}/> 當前匯率 (TWD)</div>
+                                <div className="flex items-center gap-1.5"><Icon name="globe" size={14}/> 伺服器頻道</div>
+                                <div className="text-right flex items-center justify-end gap-1.5"><Icon name="trending" size={14}/> 當前天幣匯率 (TWD)</div>
                             </div>
                             <div className="divide-y divide-white/[0.03]">
                                 {rates.length > 0 ? rates.map((item, idx) => (
@@ -367,34 +405,83 @@
                                         <div className="text-slate-200 font-bold">{item.name}</div>
                                         <div className="text-right"><span className="text-2xl font-black text-blue-400 tracking-tight">{item.value}</span></div>
                                     </div>
-                                )) : <div className="p-12 text-center text-slate-600 font-bold text-xs uppercase tracking-widest animate-pulse">正在獲取實時數據...</div>}
+                                )) : <div className="p-12 text-center text-slate-600 font-bold text-xs uppercase tracking-widest animate-pulse">正在獲取日央水原實時報價...</div>}
                             </div>
                         </div>
 
-                        <div className="dd373-card-v2 p-8 md:p-12 mb-16 flex flex-col md:flex-row items-center md:items-start gap-10 relative overflow-hidden group">
+                        {/* DD373 代購區塊 */}
+                        <div className="dd373-card-v2 p-8 md:p-12 mb-8 flex flex-col md:flex-row items-center md:items-start gap-10 relative overflow-hidden group">
                             <div className="absolute top-10 right-10 text-white/[0.03] pointer-events-none group-hover:text-blue-500/10 transition-colors">
                                 <Icon name="external" size={140} />
                             </div>
                             <div className="w-56 shrink-0 bg-white p-6 rounded-[2.5rem] shadow-2xl flex flex-col items-center gap-4">
-                                <img src="https://img3.pchome.net/di_downinfo/2025/0715/61db593796854c45a0d381e8c87403f8.png" className="w-full h-auto" alt="DD373 Logo" />
-                                <div className="bg-gradient-to-r from-orange-400 to-red-600 text-white text-xl font-black px-8 py-3 rounded-xl w-full text-center">游戏交易</div>
+                                <img src="https://img3.pchome.net/di_downinfo/2025/0715/61db593796854c45a0d381e8c87403f8.png" className="w-full h-auto" alt="DD373 遊戲交易平台" />
+                                <div className="bg-gradient-to-r from-orange-400 to-red-600 text-white text-xl font-black px-8 py-3 rounded-xl w-full text-center">代購服務</div>
                             </div>
                             <div className="flex-1 text-center md:text-left">
-                                <div className="inline-block px-3 py-1 rounded bg-blue-500/20 text-blue-400 text-[10px] font-bold uppercase tracking-wider mb-4">International Gateway</div>
-                                <h3 className="text-4xl font-bold text-white mb-5 tracking-tight">DD373 大陸版 <span className="text-blue-500">8591</span></h3>
-                                <p className="text-slate-400 text-lg font-medium mb-6">中國規模最大的遊戲跨境交易服務平台。</p>
+                                <div className="inline-block px-3 py-1 rounded bg-blue-500/20 text-blue-400 text-[10px] font-bold uppercase tracking-wider mb-4">專業 DD373 代購</div>
+                                <h3 className="text-4xl font-bold text-white mb-5 tracking-tight">DD373 大陸版 <span className="text-blue-500">8591</span> 代購專家</h3>
+                                <p className="text-slate-400 text-lg font-medium mb-6">DD373 是全中國規模最大的遊戲跨境服務平台。</p>
                                 <div className="bg-blue-500/5 border-l-4 border-blue-500 p-6 rounded-r-2xl mb-8">
-                                    <p className="text-slate-100 font-bold text-lg leading-relaxed">日央水原提供專業代拉服務及代練服務；除《天堂》外，熱門遊戲亦可諮詢。</p>
+                                    <p className="text-slate-100 font-bold text-lg leading-relaxed">我們提供專業的天幣代拉、代練與 DD373 代購服務；不論是 NC 天堂或其他熱門手遊，皆可諮詢。</p>
                                 </div>
-                                <a href="https://www.dd373.com/s-q0kacj.html" target="_blank" className="inline-flex items-center gap-3 bg-blue-600 hover:bg-blue-500 text-white font-black px-12 py-5 rounded-2xl transition-all btn-glow text-xl">前往 DD373 查看 <Icon name="chevronRight" size={24} /></a>
+                                <a href="https://www.dd373.com/s-q0kacj.html" target="_blank" className="inline-flex items-center gap-3 bg-blue-600 hover:bg-blue-500 text-white font-black px-12 py-5 rounded-2xl transition-all btn-glow text-xl">前往 DD373 賣場 <Icon name="chevronRight" size={24} /></a>
                             </div>
                         </div>
 
-                        <footer className="text-center text-[9px] text-slate-800 font-bold tracking-[0.2em] uppercase pb-10">
-                            © 2026 日央水原 • Secure & Professional Exchange
+                        {/* Facebook 粉絲專頁區塊 */}
+                        <div className="glass-morphism rounded-[3rem] p-8 md:p-12 mb-16 flex flex-col md:flex-row items-center gap-10 relative overflow-hidden group">
+                            <div className="absolute -bottom-10 -left-10 text-[#1877F2]/[0.05] pointer-events-none group-hover:text-[#1877F2]/10 transition-colors">
+                                <Icon name="facebook" size={200} />
+                            </div>
+                            
+                            <div className="relative shrink-0 w-48 h-48 rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-[#1877F2]/20">
+                                <img 
+                                    src="https://img.freepik.com/free-vector/facebook-icon-design_23-2147971485.jpg" 
+                                    className="w-full h-full object-cover" 
+                                    alt="日央水原 Facebook 粉絲團" 
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-[#1877F2]/60 to-transparent"></div>
+                                <div className="absolute bottom-4 left-0 w-full text-center">
+                                    <span className="text-white font-black text-sm tracking-widest uppercase">Official Fanpage</span>
+                                </div>
+                            </div>
+
+                            <div className="flex-1 text-center md:text-left z-10">
+                                <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-[#1877F2]/20 text-[#1877F2] text-[10px] font-bold uppercase tracking-wider mb-4">
+                                    <Icon name="facebook" size={12} /> Community Support
+                                </div>
+                                <h3 className="text-4xl font-bold text-white mb-4 tracking-tight">日央水原 <span className="text-[#1877F2]">粉絲專頁</span></h3>
+                                <p className="text-slate-300 text-lg font-medium mb-6">獲取最新資訊、天幣匯率波動提醒，以及不定期舉辦的粉絲專屬優惠活動。</p>
+                                
+                                <div className="flex flex-wrap justify-center md:justify-start gap-4 mb-8">
+                                    <span className="bg-slate-800/50 text-slate-400 px-4 py-2 rounded-full text-xs font-bold border border-white/5">#天幣買賣</span>
+                                    <span className="bg-slate-800/50 text-slate-400 px-4 py-2 rounded-full text-xs font-bold border border-white/5">#代練服務</span>
+                                    <span className="bg-slate-800/50 text-slate-400 px-4 py-2 rounded-full text-xs font-bold border border-white/5">#專業客服</span>
+                                </div>
+
+                                <a 
+                                    href="https://www.facebook.com/profile.php?id=100064047333025" 
+                                    target="_blank" 
+                                    className="inline-flex items-center gap-3 bg-[#1877F2] hover:bg-[#166fe5] text-white font-black px-12 py-5 rounded-2xl transition-all fb-btn-glow text-xl"
+                                >
+                                    追蹤我們 Facebook <Icon name="chevronRight" size={24} />
+                                </a>
+                            </div>
+                        </div>
+
+                        <footer className="text-center pb-10">
+                            <div className="max-w-2xl mx-auto mb-6 text-slate-600 text-xs font-medium leading-relaxed">
+                                日央水原致力於提供最安全的天幣買賣管道，及各伺服器匯率查詢。
+                                我們的 DD373 代購服務由資深團隊經營，保證流程透明、速度領先。
+                            </div>
+                            <div className="text-[9px] text-slate-800 font-bold tracking-[0.2em] uppercase">
+                                © 2026 日央水原 • 專業天幣買賣與 DD373 代購首選 • FB: 日央水原官方粉絲團
+                            </div>
                         </footer>
                     </main>
 
+                    {/* LINE 懸浮按鈕 */}
                     <a href="https://line.me/R/ti/p/@321enghh" target="_blank" className="fixed bottom-8 right-8 bg-[#00B900] text-white p-5 rounded-full shadow-2xl hover:scale-110 active:scale-90 transition-all z-50">
                         <Icon name="message" size={30} />
                     </a>
@@ -407,7 +494,7 @@
                             
                             <div className="max-w-md w-full animate-in fade-in zoom-in duration-300">
                                 <div className="bg-slate-900 rounded-[2.5rem] overflow-hidden border border-slate-800 mb-6 shadow-2xl max-h-[70vh] overflow-y-auto">
-                                    <img src={bannerUrl} className="w-full h-auto block" alt="報價單預覽" />
+                                    <img src={bannerUrl} className="w-full h-auto block" alt="日央水原天幣報價單" />
                                 </div>
                                 
                                 <div className="space-y-4">
@@ -416,7 +503,7 @@
                                         onClick={handleDownload}
                                         className="flex items-center justify-center gap-3 w-full bg-blue-600 hover:bg-blue-500 text-white font-black py-5 rounded-2xl text-xl shadow-xl active:scale-95 transition-all"
                                     >
-                                        <Icon name="download" size={24} /> 儲存圖片到裝置
+                                        <Icon name="download" size={24} /> 儲存報價單到裝置
                                     </button>
                                 </div>
                             </div>
