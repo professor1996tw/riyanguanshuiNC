@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>法律資訊 - 日央水原專業報價系統</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap');
+        body {
+            background-color: #020617;
+            color: #f8fafc;
+            font-family: 'Noto Sans TC', sans-serif;
+        }
+        .glass-card {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(59, 130, 246, 0.1);
+        }
+        .gradient-text {
+            background: linear-gradient(to right, #60a5fa, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .legal-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: #60a5fa;
+            border-left: 4px solid #3b82f6;
+            padding-left: 1rem;
+        }
+        .legal-content p {
+            line-height: 1.8;
+            color: #94a3b8;
+            margin-bottom: 1rem;
+        }
+        .legal-content ul {
+            list-style-type: decimal;
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: #cbd5e1;
+        }
+        .legal-content li {
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- 頂部簡單導航 -->
+    <nav class="p-6 border-b border-white/5">
+       
+            <a href="index.html" class="text-sm text-slate-400 hover:text-white transition-colors">← 返回首頁</a>
+        </div>
+    </nav>
+
+    <!-- 主要內容區 -->
+    <main class="flex-grow max-w-4xl mx-auto w-full px-6 py-12">
+        <div id="content-area" class="glass-card rounded-[2rem] p-8 md:p-12 shadow-2xl">
+            <!-- 這裡會由 JavaScript 動態插入內容 -->
+            <div id="loading" class="text-center py-20 animate-pulse text-slate-500">載入法律條款中...</div>
+        </div>
+    </main>
+
+    <!-- 可重複使用的 FOOTER 區塊 (您可以直接複製下方 <footer> 到 index.html) -->
+    <footer class="mt-auto border-t border-white/5 bg-slate-900/50 pt-16 pb-8">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-12">
+                <div>
+                    <h4 class="text-white font-bold mb-4">關於日央水原</h4>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        日央水原致力於提供最安全的天幣買賣管道及各伺服器實時匯率查詢。我們的 DD373 代購服務由資深團隊經營，保證流程透明、速度領先。
+                    </p>
+                </div>
+                <div class="grid grid-cols-2 gap-4 text-sm">
+                    <div>
+                        <h4 class="text-slate-500 font-bold mb-4 uppercase tracking-widest text-xs">法律資訊</h4>
+                        <ul class="space-y-2">
+                           <li><a href="./legal.html?page=terms" class="text-slate-400 hover:text-blue-400 transition-colors">服務條款</a></li>
+                           <li><a href="./legal.html?page=risk" class="text-slate-400 hover:text-blue-400 transition-colors">風險揭露</a></li>
+                           <li><a href="./legal.html?page=privacy" class="text-slate-400 hover:text-blue-400 transition-colors">隱私權政策</a></li>
+                           <li><a href="./legal.html?page=aml" class="text-slate-400 hover:text-blue-400 transition-colors">反洗錢聲明</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-slate-500 font-bold mb-4 uppercase tracking-widest text-xs">快速連結</h4>
+                        <ul class="space-y-2">
+                            <li><a href="index.html" class="text-slate-400 hover:text-blue-400 transition-colors">即時報價</a></li>
+                            <li><a href="kyc.html" class="text-slate-400 hover:text-blue-400 transition-colors">實名認證</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-white/5 pt-8 text-center">
+                <div class="text-[10px] text-slate-600 font-bold tracking-[0.2em] uppercase">
+                    © 2026 日央水原 • 專業天幣買賣與 DD373 代購首選 • 謹防詐騙 • 請認明官方 LINE @321enghh
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const legalData = {
+            terms: {
+                title: "服務條款（Terms of Service）",
+                date: "2026 年 3 月",
+                html: `
+                    <div class="legal-content">
+                        <p class="text-sm opacity-60">最後更新日期：2026 年 3 月</p>
+                        <p>歡迎使用「日央水原」（以下簡稱「本平台」）所提供之相關服務。當您瀏覽或使用本平台，即表示您已閱讀、理解並同意本服務條款之全部內容。</p>
+                        <h2>一、服務內容</h2>
+                        <ul>
+                            <li>本平台提供 NC 天堂相關天幣報價查詢資訊。</li>
+                            <li>本平台提供 DD373 代購、代拉與遊戲幣相關代辦服務。</li>
+                            <li>本平台保留隨時修改、暫停或終止服務之權利。</li>
+                        </ul>
+                        <h2>二、會員資格與行為規範</h2>
+                        <ul>
+                            <li>使用者須具備完全行為能力。</li>
+                            <li>使用者不得利用本平台從事任何違法行為。</li>
+                            <li>不得冒用他人身分或提供不實資料。</li>
+                            <li>若違反相關規定，本平台有權拒絕或終止服務。</li>
+                        </ul>
+                        <h2>三、交易聲明</h2>
+                        <ul>
+                            <li>本平台所顯示之價格僅供參考。</li>
+                            <li>實際交易價格以雙方最終確認為準。</li>
+                            <li>市場價格可能因遊戲環境或市場供需波動而變動。</li>
+                        </ul>
+                        <h2>四、免責聲明</h2>
+                        <ul>
+                            <li>本平台不對遊戲官方政策變更負責。</li>
+                            <li>因第三方平台因素造成之延遲，本平台不負直接責任。</li>
+                            <li>因不可抗力因素造成損失，本平台不承擔賠償責任。</li>
+                        </ul>
+                        <h2>五、條款修改</h2>
+                        <p>本平台有權隨時修訂本條款，並於網站公告後即生效。</p>
+                    </div>
+                `
+            },
+            risk: {
+                title: "風險揭露（Risk Disclosure）",
+                date: "2026 年 3 月",
+                html: `
+                    <div class="legal-content">
+                        <p class="text-sm opacity-60">最後更新日期：2026 年 3 月</p>
+                        <p>本平台提醒您，遊戲幣交易具有一定風險，請審慎評估。</p>
+                        <h2>一、價格波動風險</h2>
+                        <p>遊戲幣價格可能因遊戲版本更新、官方政策變更或市場供需失衡而產生大幅波動。</p>
+                        <h2>二、帳號安全風險</h2>
+                        <ul>
+                            <li>請勿將帳號密碼提供給第三方。</li>
+                            <li>若因個人疏忽導致帳號損失，本平台不負責任。</li>
+                        </ul>
+                        <h2>三、第三方平台風險</h2>
+                        <p>本平台部分服務涉及 DD373 或其他第三方平台，其政策與規則可能隨時變動。</p>
+                        <h2>四、政策風險</h2>
+                        <p>若遊戲官方禁止相關交易行為，可能影響交易完成與帳號安全。</p>
+                    </div>
+                `
+            },
+            privacy: {
+                title: "隱私權政策（Privacy Policy）",
+                date: "2026 年 3 月",
+                html: `
+                    <div class="legal-content">
+                        <p class="text-sm opacity-60">最後更新日期：2026 年 3 月</p>
+                        <p>本平台重視您的個人資料保護，並依相關法規辦理。</p>
+                        <h2>一、蒐集資料類型</h2>
+                        <ul>
+                            <li>姓名、聯絡方式（LINE / 電話）</li>
+                            <li>身分證件影像（KYC 驗證）</li>
+                            <li>交易紀錄</li>
+                        </ul>
+                        <h2>二、資料用途</h2>
+                        <ul>
+                            <li>身分驗證（KYC）以防止詐騙及違法行為</li>
+                            <li>交易流程處理與客戶服務聯繫</li>
+                        </ul>
+                        <h2>三、資料保存</h2>
+                        <p>僅於必要範圍內保存資料，並採合理安全措施保護資料安全，不會販售或提供給無關第三方。</p>
+                        <h2>四、使用者權利</h2>
+                        <p>您可申請查詢、更正或在法律允許範圍內請求刪除個人資料。</p>
+                    </div>
+                `
+            },
+            aml: {
+                title: "反洗錢聲明（AML Statement）",
+                date: "2026 年 3 月",
+                html: `
+                    <div class="legal-content">
+                        <p class="text-sm opacity-60">最後更新日期：2026 年 3 月</p>
+                        <p>為防止洗錢及詐騙行為，本平台實施以下政策：</p>
+                        <h2>一、KYC 身分驗證</h2>
+                        <ul>
+                            <li>高額交易須完成實名認證。</li>
+                            <li>本平台保留要求補充資料之權利。</li>
+                        </ul>
+                        <h2>二、可疑交易監控</h2>
+                        <p>若發現異常大額交易、多帳號頻繁轉換或可疑資金來源，本平台有權暫停交易、要求補件或通報相關機關。</p>
+                        <h2>三、拒絕服務權</h2>
+                        <p>若使用者涉及詐騙、洗錢或違法行為，本平台將立即終止合作。</p>
+                    </div>
+                `
+            }
+        };
+
+        function renderContent() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const page = urlParams.get('page') || 'terms';
+            const data = legalData[page] || legalData.terms;
+            
+            const area = document.getElementById('content-area');
+            area.innerHTML = `
+                <h1 class="text-3xl md:text-4xl font-black mb-8 gradient-text">${data.title}</h1>
+                ${data.html}
+            `;
+            window.scrollTo(0, 0);
+        }
+
+        window.addEventListener('load', renderContent);
+        // 當參數改變時更新（例如點擊 footer 連結時）
+        window.addEventListener('popstate', renderContent);
+    </script>
+</body>
+</html>
