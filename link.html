@@ -536,6 +536,136 @@
             gap: 12px;
         }
 
+        /* Section titles */
+        .section-title {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            margin-bottom: 6px;
+            width: 100%;
+            animation: textEntry 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.95s both;
+        }
+
+        .section-title-cn {
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            color: var(--text-primary);
+        }
+
+        .section-title-en {
+            font-family: 'Inter', sans-serif;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 5px;
+            color: var(--text-secondary);
+        }
+
+        .section-title--social {
+            margin-top: 12px;
+            animation: textEntry 0.8s cubic-bezier(0.16, 1, 0.3, 1) 1.6s both;
+        }
+
+        /* Social grid (2x2) */
+        .social-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .social-card {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 14px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+            backdrop-filter: blur(40px) saturate(1.4);
+            -webkit-backdrop-filter: blur(40px) saturate(1.4);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 2px 12px rgba(0, 0, 0, 0.2);
+            text-decoration: none;
+            color: var(--text-primary);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .social-card:nth-child(1) { animation: cardEntry 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.7s both; }
+        .social-card:nth-child(2) { animation: cardEntry 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.8s both; }
+        .social-card:nth-child(3) { animation: cardEntry 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.9s both; }
+        .social-card:nth-child(4) { animation: cardEntry 0.7s cubic-bezier(0.16, 1, 0.3, 1) 2.0s both; }
+
+        /* Glow border on hover (reuse from link-card) */
+        .social-card::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: 15px;
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(200, 150, 62, 0.5), rgba(56, 189, 248, 0.3), rgba(200, 150, 62, 0.2));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .social-card::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -120%;
+            width: 60%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(200, 150, 62, 0.08), rgba(255, 255, 255, 0.06), transparent);
+            transform: skewX(-15deg);
+            transition: none;
+        }
+
+        .social-card:hover {
+            transform: translateY(-3px) scale(1.03);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.13), rgba(200, 150, 62, 0.06));
+            border-color: rgba(255, 255, 255, 0.18);
+            box-shadow:
+                0 8px 30px rgba(200, 150, 62, 0.1),
+                0 4px 12px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15);
+        }
+
+        .social-card:hover::before { opacity: 1; }
+        .social-card:hover::after { left: 130%; transition: left 0.8s ease; }
+        .social-card:active { transform: translateY(-1px) scale(1.01); }
+
+        .social-card .link-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+        }
+
+        .social-card:hover .link-icon {
+            transform: scale(1.1) rotate(-3deg);
+        }
+
+        .social-card .link-title {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 1px;
+        }
+
+        .social-card:hover .link-title { color: var(--gold-light); }
+
+        .social-card .link-desc {
+            font-size: 9.5px;
+        }
+
+        /* Hover glow for social cards */
+        .social-card:hover .icon-meta { box-shadow: 0 0 25px rgba(24, 119, 242, 0.25); }
+        .social-card:hover .icon-ig { box-shadow: 0 0 25px rgba(225, 48, 108, 0.25); }
+        .social-card:hover .icon-yt { box-shadow: 0 0 25px rgba(255, 0, 0, 0.25); }
+        .social-card:hover .icon-tiktok { box-shadow: 0 0 25px rgba(105, 201, 208, 0.25); }
+
         .link-card {
             display: flex;
             align-items: center;
@@ -563,6 +693,8 @@
         .link-card:nth-child(4) { animation: cardEntry 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.3s both; }
         .link-card:nth-child(5) { animation: cardEntry 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.4s both; }
         .link-card:nth-child(6) { animation: cardEntry 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.5s both; }
+        .link-card:nth-child(7) { animation: cardEntry 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.6s both; }
+        .link-card:nth-child(8) { animation: cardEntry 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.7s both; }
 
         @keyframes cardEntry {
             from { opacity: 0; transform: translateX(-40px) scale(0.95); filter: blur(5px); }
@@ -691,12 +823,23 @@
             box-shadow: 0 0 20px rgba(16, 185, 129, 0.08), inset 0 1px 0 rgba(255,255,255,0.08);
         }
 
+        .icon-yt {
+            background: linear-gradient(135deg, rgba(255, 0, 0, 0.2), rgba(255, 0, 0, 0.05));
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.08), inset 0 1px 0 rgba(255,255,255,0.08);
+        }
+        .icon-tiktok {
+            background: linear-gradient(135deg, rgba(105, 201, 208, 0.2), rgba(238, 29, 82, 0.1));
+            box-shadow: 0 0 20px rgba(105, 201, 208, 0.08), inset 0 1px 0 rgba(255,255,255,0.08);
+        }
+
         /* Hover glow per icon */
         .link-card:hover .icon-trade { box-shadow: 0 0 25px rgba(200, 150, 62, 0.25); }
         .link-card:hover .icon-web { box-shadow: 0 0 25px rgba(56, 189, 248, 0.25); }
         .link-card:hover .icon-line { box-shadow: 0 0 25px rgba(6, 199, 85, 0.25); }
         .link-card:hover .icon-meta { box-shadow: 0 0 25px rgba(24, 119, 242, 0.25); }
         .link-card:hover .icon-ig { box-shadow: 0 0 25px rgba(225, 48, 108, 0.25); }
+        .link-card:hover .icon-yt { box-shadow: 0 0 25px rgba(255, 0, 0, 0.25); }
+        .link-card:hover .icon-tiktok { box-shadow: 0 0 25px rgba(105, 201, 208, 0.25); }
         .link-card:hover .icon-kyc { box-shadow: 0 0 25px rgba(16, 185, 129, 0.25); }
 
         /* ============================================
@@ -940,7 +1083,11 @@
 
         <div class="divider"></div>
 
-        <!-- Links -->
+        <!-- ===== 服務入口 SERVICE ===== -->
+        <div class="section-title">
+            <span class="section-title-cn">服務入口</span>
+            <span class="section-title-en">SERVICE</span>
+        </div>
         <div class="links">
             <!-- 1. 交易網 -->
             <a href="javascript:void(0)" class="link-card" id="tradeLink" onclick="document.getElementById('comingSoonModal').classList.add('show');return false;">
@@ -971,7 +1118,7 @@
                 </div>
                 <div class="link-content">
                     <div class="link-title">官方網站</div>
-                    <div class="link-desc">即時幣價查詢</div>
+                    <div class="link-desc">了解更多服務內容</div>
                 </div>
                 <div class="link-arrow">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
@@ -994,24 +1141,45 @@
                 </div>
             </a>
 
-            <!-- 4. META -->
-            <a href="https://www.facebook.com/profile.php?id=100064047333025" class="link-card" target="_blank" rel="noopener">
+            <!-- 4. KYC -->
+            <a href="https://sunwater.me/kyc.html" class="link-card" target="_blank" rel="noopener">
+                <div class="link-icon icon-kyc">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        <path d="M9 12l2 2 4-4"/>
+                    </svg>
+                </div>
+                <div class="link-content">
+                    <div class="link-title">KYC 實名認證</div>
+                    <div class="link-desc">快速驗證・安心交易</div>
+                </div>
+                <div class="link-arrow">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+                </div>
+            </a>
+        </div>
+
+        <!-- ===== 社群媒體 SOCIAL MEDIA ===== -->
+        <div class="section-title section-title--social">
+            <span class="section-title-cn">社群媒體</span>
+            <span class="section-title-en">SOCIAL MEDIA</span>
+        </div>
+        <div class="social-grid">
+            <!-- Facebook -->
+            <a href="https://www.facebook.com/profile.php?id=100064047333025" class="social-card social-card--1" target="_blank" rel="noopener">
                 <div class="link-icon icon-meta">
                     <svg viewBox="0 0 24 24" fill="#1877F2">
                         <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
                     </svg>
                 </div>
                 <div class="link-content">
-                    <div class="link-title">Facebook 粉絲專頁</div>
-                    <div class="link-desc">最新消息・活動優惠</div>
-                </div>
-                <div class="link-arrow">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+                    <div class="link-title">Facebook</div>
+                    <div class="link-desc">粉絲專頁</div>
                 </div>
             </a>
 
-            <!-- 5. IG -->
-            <a href="https://www.instagram.com/sunwater168168/" class="link-card" target="_blank" rel="noopener">
+            <!-- Instagram -->
+            <a href="https://www.instagram.com/sunwater168168/" class="social-card social-card--2" target="_blank" rel="noopener">
                 <div class="link-icon icon-ig">
                     <svg viewBox="0 0 24 24" fill="none">
                         <defs>
@@ -1030,27 +1198,40 @@
                 </div>
                 <div class="link-content">
                     <div class="link-title">Instagram</div>
-                    <div class="link-desc">日常動態・玩家社群</div>
-                </div>
-                <div class="link-arrow">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+                    <div class="link-desc">日常動態</div>
                 </div>
             </a>
 
-            <!-- 6. KYC -->
-            <a href="https://sunwater.me/kyc.html" class="link-card" target="_blank" rel="noopener">
-                <div class="link-icon icon-kyc">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                        <path d="M9 12l2 2 4-4"/>
+            <!-- YouTube -->
+            <a href="https://www.youtube.com/@sunwater_game.service" class="social-card social-card--3" target="_blank" rel="noopener">
+                <div class="link-icon icon-yt">
+                    <svg viewBox="0 0 24 24" fill="#FF0000">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
                     </svg>
                 </div>
                 <div class="link-content">
-                    <div class="link-title">KYC 實名認證</div>
-                    <div class="link-desc">快速驗證・安心交易</div>
+                    <div class="link-title">YouTube</div>
+                    <div class="link-desc">影片頻道</div>
                 </div>
-                <div class="link-arrow">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+            </a>
+
+            <!-- TikTok -->
+            <a href="https://www.tiktok.com/@sunwater168168" class="social-card social-card--4" target="_blank" rel="noopener">
+                <div class="link-icon icon-tiktok">
+                    <svg viewBox="0 0 24 24" fill="none">
+                        <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15.2a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V9.17a8.16 8.16 0 0 0 4.76 1.53v-3.5a4.82 4.82 0 0 1-1-.51z" fill="#ffffff"/>
+                        <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15.2a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V9.17a8.16 8.16 0 0 0 4.76 1.53v-3.5a4.82 4.82 0 0 1-1-.51z" fill="url(#tiktokGrad)" opacity="0.8"/>
+                        <defs>
+                            <linearGradient id="tiktokGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#69C9D0"/>
+                                <stop offset="100%" stop-color="#EE1D52"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <div class="link-content">
+                    <div class="link-title">TikTok</div>
+                    <div class="link-desc">短影音</div>
                 </div>
             </a>
         </div>
