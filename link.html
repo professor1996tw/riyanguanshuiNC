@@ -994,6 +994,98 @@
                 border-color: rgba(200, 150, 62, 0.3);
             }
         }
+
+        /* ============================================
+           MOBILE UX OPTIMIZATION
+           ============================================ */
+        @media (max-width: 768px) {
+            /* Disable heavy canvas animations on mobile */
+            .city-canvas,
+            .network-canvas {
+                display: none !important;
+            }
+
+            /* Reduce backdrop-filter for smooth scrolling */
+            .link-card {
+                backdrop-filter: blur(12px) saturate(1.2);
+                -webkit-backdrop-filter: blur(12px) saturate(1.2);
+            }
+            .social-card {
+                backdrop-filter: blur(12px) saturate(1.2);
+                -webkit-backdrop-filter: blur(12px) saturate(1.2);
+            }
+            .logo-container {
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+            }
+
+            /* Simplify entry animations - pure fade, no translate/blur */
+            @keyframes cardEntry {
+                from { opacity: 0; transform: translateY(12px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            @keyframes logoEntry {
+                from { opacity: 0; transform: scale(0.9); }
+                to { opacity: 1; transform: scale(1); }
+            }
+            @keyframes textEntry {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+
+            /* Reduce animation durations */
+            .link-card:nth-child(1) { animation-duration: 0.4s; animation-delay: 0.3s; }
+            .link-card:nth-child(2) { animation-duration: 0.4s; animation-delay: 0.4s; }
+            .link-card:nth-child(3) { animation-duration: 0.4s; animation-delay: 0.5s; }
+            .link-card:nth-child(4) { animation-duration: 0.4s; animation-delay: 0.6s; }
+            .social-card:nth-child(1) { animation-duration: 0.4s; animation-delay: 0.7s; }
+            .social-card:nth-child(2) { animation-duration: 0.4s; animation-delay: 0.8s; }
+            .social-card:nth-child(3) { animation-duration: 0.4s; animation-delay: 0.9s; }
+            .social-card:nth-child(4) { animation-duration: 0.4s; animation-delay: 1.0s; }
+
+            /* Reduce glow orb complexity */
+            .glow-orb {
+                filter: blur(60px);
+                opacity: 0.5;
+            }
+
+            /* Simplify neon portals */
+            .neon-portals {
+                opacity: 0.3;
+            }
+
+            /* Disable hover glow borders on mobile (not needed) */
+            .link-card::before,
+            .social-card::before {
+                display: none;
+            }
+
+            /* Reduce box-shadow complexity */
+            .link-card {
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            }
+            .social-card {
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            }
+
+            /* Reduce floating particle count via CSS */
+            .particle:nth-child(n+20) {
+                display: none;
+            }
+        }
+
+        /* Users who prefer reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            .city-canvas,
+            .network-canvas {
+                display: none !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1245,8 +1337,11 @@
 
     <!-- ========== SCRIPTS ========== -->
     <script>
+        // Mobile detection - skip heavy animations
+        const isMobile = window.innerWidth <= 768 || 'ontouchstart' in window;
+
         // === WIREFRAME CITY SKYLINE ===
-        (function() {
+        if (!isMobile) { (function() {
             const cityCanvas = document.getElementById('cityCanvas');
             const cctx = cityCanvas.getContext('2d');
             let buildings = [];
@@ -1506,11 +1601,11 @@
             resizeCity();
             window.addEventListener('resize', resizeCity);
             drawCity();
-        })();
+        })(); }
 
         // === Floating particles ===
         const particlesEl = document.getElementById('particles');
-        const count = 45;
+        const count = isMobile ? 15 : 45;
 
         for (let i = 0; i < count; i++) {
             const p = document.createElement('div');
@@ -1575,7 +1670,8 @@
             });
         });
 
-        // === Network Canvas (Polygon Mesh) ===
+        // === Network Canvas (Polygon Mesh) — desktop only ===
+        if (!isMobile) {
         const canvas = document.getElementById('networkCanvas');
         const ctx = canvas.getContext('2d');
         let nodes = [];
@@ -1697,6 +1793,7 @@
                 drawNetwork();
             }
         });
+        } // end !isMobile network canvas
 
         // Add ripple keyframes dynamically
         const style = document.createElement('style');
